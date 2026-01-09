@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>LLM Agent 简易调用页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+          sans-serif;
+        background: radial-gradient(circle at top, #111827, #020617);
+        color: #e5e7eb;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+
+      .app {
+        width: 100%;
+        max-width: 960px;
+        background: rgba(15, 23, 42, 0.96);
+        border-radius: 18px;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
+        padding: 24px 24px 20px;
+        backdrop-filter: blur(18px);
+      }
+
+      .app-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .title-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo {
+        width: 32px;
+        height: 32px;
+        border-radius: 12px;
+        background: conic-gradient(
+          from 160deg,
+          #4ade80,
+          #22d3ee,
+          #6366f1,
+          #a855f7,
+          #4ade80
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #020617;
+        font-weight: 800;
+        font-size: 18px;
+      }
+
+      h1 {
+        font-size: 18px;
+        margin: 0;
+        letter-spacing: 0.02em;
+      }
+
+      .subtitle {
+        font-size: 12px;
+        color: #9ca3af;
+      }
+
+      .badge {
+        font-size: 11px;
+        padding: 3px 9px;
+        border-radius: 999px;
+        background: rgba(15, 118, 110, 0.18);
+        color: #a5f3fc;
+        border: 1px solid rgba(34, 211, 238, 0.45);
+      }
+
+      .section-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: #9ca3af;
+        letter-spacing: 0.12em;
+        margin-bottom: 6px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+        gap: 16px;
+      }
+
+      @media (max-width: 800px) {
+        .grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      .card {
+        background: radial-gradient(circle at top left, #020617, #020617);
+        border-radius: 14px;
+        border: 1px solid rgba(30, 64, 175, 0.5);
+        padding: 14px 14px 12px;
+      }
+
+      .card + .card {
+        border-color: rgba(31, 41, 55, 0.95);
+        background: radial-gradient(circle at top left, #020617, #020617);
+      }
+
+      label {
+        display: block;
+        font-size: 12px;
+        color: #e5e7eb;
+        margin-bottom: 4px;
+      }
+
+      label span.hint {
+        color: #9ca3af;
+        font-size: 11px;
+        margin-left: 6px;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        border-radius: 9px;
+        border: 1px solid rgba(55, 65, 81, 0.9);
+        background: rgba(15, 23, 42, 0.9);
+        color: #e5e7eb;
+        padding: 7px 9px;
+        font-size: 13px;
+        outline: none;
+        transition: border-color 0.16s ease, box-shadow 0.16s ease,
+          background-color 0.16s ease;
+      }
+
+      input:focus,
+      textarea:focus,
+      select:focus {
+        border-color: #22d3ee;
+        box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.7);
+        background: rgba(15, 23, 42, 0.96);
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        color: #6b7280;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 120px;
+        max-height: 260px;
+        line-height: 1.5;
+      }
+
+      .field-row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+
+      .field-row > div {
+        flex: 1;
+      }
+
+      .field {
+        margin-bottom: 8px;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 6px;
+        gap: 8px;
+      }
+
+      .actions-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 11px;
+        color: #9ca3af;
+      }
+
+      .pill {
+        border-radius: 999px;
+        border: 1px dashed rgba(55, 65, 81, 0.9);
+        padding: 4px 8px;
+      }
+
+      .status {
+        font-size: 12px;
+        min-height: 18px;
+      }
+
+      .status span {
+        padding: 2px 7px;
+        border-radius: 999px;
+      }
+
+      .status--idle {
+        color: #9ca3af;
+      }
+
+      .status--loading span {
+        background: rgba(30, 64, 175, 0.2);
+        color: #93c5fd;
+      }
+
+      .status--error span {
+        background: rgba(127, 29, 29, 0.25);
+        color: #fecaca;
+      }
+
+      .status--success span {
+        background: rgba(22, 101, 52, 0.3);
+        color: #bbf7d0;
+      }
+
+      button {
+        border: none;
+        border-radius: 999px;
+        padding: 8px 18px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: radial-gradient(circle at top left, #22c55e, #16a34a);
+        color: #022c22;
+        box-shadow: 0 10px 24px rgba(22, 163, 74, 0.52);
+        transition: transform 0.09s ease, box-shadow 0.09s ease,
+          filter 0.09s ease, opacity 0.09s ease;
+        white-space: nowrap;
+      }
+
+      button:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 18px 30px rgba(22, 163, 74, 0.58);
+        filter: brightness(1.03);
+      }
+
+      button:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: 0 10px 18px rgba(22, 163, 74, 0.5);
+        filter: brightness(0.98);
+      }
+
+      button:disabled {
+        opacity: 0.55;
+        cursor: default;
+        box-shadow: none;
+      }
+
+      button.secondary {
+        background: transparent;
+        color: #9ca3af;
+        box-shadow: none;
+        border-radius: 999px;
+        border: 1px dashed rgba(75, 85, 99, 0.95);
+        padding: 6px 11px;
+        font-size: 11px;
+      }
+
+      button.secondary:hover {
+        background: rgba(15, 23, 42, 0.75);
+        transform: none;
+        box-shadow: none;
+      }
+
+      .response-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 6px;
+      }
+
+      .response-meta {
+        font-size: 11px;
+        color: #9ca3af;
+      }
+
+      .response-box {
+        border-radius: 10px;
+        border: 1px solid rgba(55, 65, 81, 0.95);
+        background: radial-gradient(circle at top, #020617, #020617);
+        padding: 10px 10px 9px;
+        min-height: 160px;
+        font-size: 13px;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      .response-placeholder {
+        color: #6b7280;
+      }
+
+      .footer {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid rgba(31, 41, 55, 0.9);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        font-size: 11px;
+        color: #6b7280;
+      }
+
+      .footer a {
+        color: #93c5fd;
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      .mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app">
+      <header class="app-header">
+        <div class="title-group">
+          <div class="logo">LL</div>
+          <div>
+            <h1>LLM Agent API 调用面板</h1>
+            <div class="subtitle">在浏览器里快速试你的 LLM 接口</div>
+          </div>
+        </div>
+        <div class="badge">纯前端 · 无后端 · 自行配置 API</div>
+      </header>
+
+      <section>
+        <div class="section-label">请求设置 & 会话</div>
+        <div class="grid">
+          <!-- 左侧：一次性配置区域 -->
+          <div class="card">
+            <div class="field">
+              <label for="endpoint">
+                接口地址（URL）
+                <span class="hint">例如：https://api.openai.com/v1/chat/completions</span>
+              </label>
+              <input
+                id="endpoint"
+                type="text"
+                placeholder="输入你的 LLM Agent 接口地址"
+                value="https://api.openai.com/v1/chat/completions"
+              />
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="method">请求方式</label>
+                <select id="method">
+                  <option value="POST">POST</option>
+                  <option value="GET">GET</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="apiKey">
+                  API Key
+                  <span class="hint">本机浏览器本地保存，仅你自己可见</span>
+                </label>
+                <input
+                  id="apiKey"
+                  type="password"
+                  placeholder="在此输入一次 OpenAI API Key，之后自动记住"
+                />
+              </div>
+            </div>
+
+            <div class="actions">
+              <div class="actions-left">
+                <div class="pill mono" id="methodPreview">
+                  fetch(url, { method: "POST" })
+                </div>
+                <div class="pill" style="display: flex; align-items: center; gap: 6px;">
+                  <button
+                    type="button"
+                    id="fileBtn"
+                    class="secondary"
+                    style="padding: 4px 9px; font-size: 11px;"
+                  >
+                    选择文件
+                  </button>
+                  <input
+                    id="fileInput"
+                    type="file"
+                    multiple
+                    style="display: none;"
+                  />
+                  <span id="fileInfo" style="font-size: 11px; color: #9ca3af;">
+                    未选择文件
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="status status--idle" id="statusText"></div>
+          </div>
+
+          <!-- 右侧：聊天对话区域 -->
+          <div class="card" style="display: flex; flex-direction: column; gap: 8px;">
+            <div class="response-header">
+              <div class="section-label" style="margin-bottom: 0">
+                对话窗口
+              </div>
+              <div class="response-meta mono" id="responseMeta">
+                新会话
+              </div>
+            </div>
+            <div
+              id="chatHistory"
+              style="
+                flex: 1;
+                min-height: 260px;
+                max-height: 460px;
+                overflow-y: auto;
+                border-radius: 10px;
+                border: 1px solid rgba(55, 65, 81, 0.95);
+                background: radial-gradient(circle at top, #020617, #020617);
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+              "
+            >
+              <div
+                style="
+                  font-size: 12px;
+                  color: #6b7280;
+                  text-align: center;
+                  padding: 8px 0;
+                "
+              >
+                这是一个支持上下文的 ChatGPT 对话窗口。左侧配置好 API 和模型后，在下方输入框开始聊天。
+              </div>
+            </div>
+            <div
+              style="
+                border-radius: 999px;
+                border: 1px solid rgba(55, 65, 81, 0.95);
+                padding: 4px 6px 4px 10px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                background: rgba(15, 23, 42, 0.9);
+              "
+            >
+              <input
+                id="prompt"
+                type="text"
+                placeholder="在这里输入你想说的话，按 Enter 发送，Shift+Enter 换行"
+                style="
+                  border: none;
+                  outline: none;
+                  background: transparent;
+                  font-size: 13px;
+                  color: #e5e7eb;
+                  flex: 1;
+                "
+              />
+              <button
+                type="button"
+                id="sendBtn"
+                style="padding-inline: 14px; font-size: 12px;"
+              >
+                <span id="sendBtnLabel">发送</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>
+          默认实现假设你的接口为 OpenAI Chat Completions（或兼容接口）；你可以直接在
+          <span class="mono">页面底部的 JavaScript</span> 中自定义请求体和解析方式。
+        </span>
+      </footer>
+    </main>
+
+    <script>
+      const endpointInput = document.getElementById("endpoint");
+      const methodSelect = document.getElementById("method");
+      const apiKeyInput = document.getElementById("apiKey");
+      const promptInput = document.getElementById("prompt");
+      const sendBtn = document.getElementById("sendBtn");
+      const sendBtnLabel = document.getElementById("sendBtnLabel");
+      const statusText = document.getElementById("statusText");
+      const responseMeta = document.getElementById("responseMeta");
+      const methodPreview = document.getElementById("methodPreview");
+      const fileInput = document.getElementById("fileInput");
+      const fileInfo = document.getElementById("fileInfo");
+      const fileBtn = document.getElementById("fileBtn");
+      const chatHistoryEl = document.getElementById("chatHistory");
+
+      const STORAGE_KEY_API = "llm_demo_openai_api_key";
+
+      let messages = [];
+
+      function setStatus(type, text) {
+        statusText.className = "status status--" + type;
+        statusText.innerHTML = text
+          ? "<span>" + text + "</span>"
+          : "<span>&nbsp;</span>";
+      }
+
+      function setLoading(loading) {
+        sendBtn.disabled = loading;
+        sendBtnLabel.textContent = loading ? "调用中…" : "发送";
+      }
+
+      function appendMessage(role, content) {
+        const wrap = document.createElement("div");
+        wrap.style.display = "flex";
+        wrap.style.marginBottom = "2px";
+        wrap.style.justifyContent = role === "user" ? "flex-end" : "flex-start";
+
+        const bubble = document.createElement("div");
+        bubble.style.maxWidth = "80%";
+        bubble.style.padding = "8px 10px";
+        bubble.style.borderRadius =
+          role === "user" ? "16px 16px 4px 16px" : "16px 16px 16px 4px";
+        bubble.style.fontSize = "13px";
+        bubble.style.lineHeight = "1.6";
+        bubble.style.whiteSpace = "pre-wrap";
+        bubble.style.wordWrap = "break-word";
+
+        if (role === "user") {
+          bubble.style.background =
+            "linear-gradient(135deg, #4ade80, #22c55e, #16a34a)";
+          bubble.style.color = "#022c22";
+        } else {
+          bubble.style.background = "rgba(15,23,42,0.95)";
+          bubble.style.border = "1px solid rgba(55,65,81,0.9)";
+          bubble.style.color = "#e5e7eb";
+        }
+
+        bubble.textContent = content;
+        wrap.appendChild(bubble);
+        chatHistoryEl.appendChild(wrap);
+
+        chatHistoryEl.scrollTop = chatHistoryEl.scrollHeight;
+      }
+
+      function resetConversation() {
+        messages = [];
+        chatHistoryEl.innerHTML = `
+          <div
+            style="
+              font-size: 12px;
+              color: #6b7280;
+              text-align: center;
+              padding: 8px 0;
+            "
+          >
+            这是一个支持上下文的 ChatGPT 对话窗口。左侧配置好 API 和模型后，在下方输入框开始聊天。
+          </div>
+        `;
+        responseMeta.textContent = "新会话";
+      }
+
+      function updateMethodPreview() {
+        const method = methodSelect.value || "POST";
+        methodPreview.textContent = 'fetch(url, { method: "' + method + '" })';
+      }
+
+      methodSelect.addEventListener("change", updateMethodPreview);
+      updateMethodPreview();
+
+      // 读取本地保存的 API Key（仅保存在当前浏览器）
+      try {
+        const savedKey = localStorage.getItem(STORAGE_KEY_API);
+        if (savedKey) {
+          apiKeyInput.value = savedKey;
+        }
+      } catch (e) {
+        console.warn("无法读取本地 API Key：", e);
+      }
+
+      apiKeyInput.addEventListener("change", () => {
+        const key = apiKeyInput.value.trim();
+        try {
+          if (key) {
+            localStorage.setItem(STORAGE_KEY_API, key);
+          } else {
+            localStorage.removeItem(STORAGE_KEY_API);
+          }
+        } catch (e) {
+          console.warn("无法写入本地 API Key：", e);
+        }
+      });
+
+      fileBtn.addEventListener("click", () => {
+        fileInput.click();
+      });
+
+      fileInput.addEventListener("change", () => {
+        const files = Array.from(fileInput.files || []);
+        if (!files.length) {
+          fileInfo.textContent = "未选择文件";
+          return;
+        }
+        if (files.length === 1) {
+          fileInfo.textContent = "已选 1 个文件：" + files[0].name;
+        } else {
+          fileInfo.textContent =
+            "已选 " + files.length + " 个文件，首个：" + files[0].name;
+        }
+      });
+
+      function readFileAsText(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result || "");
+          reader.onerror = reject;
+          reader.readAsText(file);
+        });
+      }
+
+      function formatJSON(obj) {
+        try {
+          return JSON.stringify(obj, null, 2);
+        } catch (e) {
+          return String(obj);
+        }
+      }
+
+      function extractLLMText(json) {
+        try {
+          if (
+            json &&
+            json.choices &&
+            Array.isArray(json.choices) &&
+            json.choices[0]
+          ) {
+            const choice = json.choices[0];
+            if (choice.message && typeof choice.message.content === "string") {
+              return choice.message.content;
+            }
+            if (typeof choice.text === "string") {
+              return choice.text;
+            }
+          }
+        } catch (e) {
+          // ignore
+        }
+        return null;
+      }
+
+      async function callLLM() {
+        const endpoint = (endpointInput.value || "").trim();
+        const method = (methodSelect.value || "POST").toUpperCase();
+        const apiKey = apiKeyInput.value.trim();
+        let prompt = (promptInput.value || "").trim();
+
+        if (!endpoint) {
+          setStatus("error", "请先输入接口地址（URL）");
+          endpointInput.focus();
+          return;
+        }
+
+        let url;
+        try {
+          url = new URL(endpoint);
+        } catch {
+          setStatus("error", "接口地址不是合法的 URL，请检查格式");
+          return;
+        }
+
+        const headers = {
+          "Content-Type": "application/json",
+        };
+        if (apiKey) {
+          headers["Authorization"] = "Bearer " + apiKey;
+        }
+
+        // 读取选中的文件（如果有），作为附加上下文发送给 LLM
+        const files = Array.from(fileInput.files || []);
+        let attachments = [];
+        if (files.length) {
+          try {
+            const contents = await Promise.all(
+              files.map((f) => readFileAsText(f))
+            );
+            attachments = files.map((f, i) => ({
+              name: f.name,
+              size: f.size,
+              type: f.type,
+              content: contents[i],
+            }));
+
+            // 同时把文件内容简单地附加到 prompt 末尾
+            // 如不需要，可删除这一段拼接，只保留 attachments 字段
+            const fileText =
+              attachments
+                .map(
+                  (a) =>
+                    `\n[文件: ${a.name} | size=${a.size} bytes]\n${a.content}`
+                )
+                .join("\n") || "";
+            if (fileText) {
+              prompt =
+                (prompt ? prompt + "\n\n" : "") +
+                "[附加文件内容开始]\n" +
+                fileText +
+                "\n[附加文件内容结束]";
+            }
+          } catch (e) {
+            console.warn("读取文件失败，仅发送文本 prompt：", e);
+          }
+        }
+
+        if (!prompt) {
+          setStatus("error", "请输入要发送的内容");
+          promptInput.focus();
+          return;
+        }
+
+        const userMessage = { role: "user", content: prompt };
+        messages.push(userMessage);
+        appendMessage("user", prompt);
+
+        setLoading(true);
+        setStatus("loading", "正在调用 LLM 接口…");
+        responseMeta.textContent = "请求发送中…";
+        promptInput.value = "";
+
+        // 针对 OpenAI Chat Completions 的默认请求体
+        // 如果你用的是兼容 OpenAI 协议的服务，只需改 model 名称即可
+        const body = {
+          model: "gpt-4.1-mini",
+          messages,
+          temperature: 0.7,
+          // 如果你在自己后端转发，再根据需要自行处理 attachments
+          // 这里不直接传给 OpenAI，避免出现不兼容字段
+        };
+
+        // 如果你的 API 不是 OpenAI 兼容，可以根据需要改造上面 body 的结构
+
+        try {
+          const start = performance.now();
+          const res = await fetch(url.toString(), {
+            method,
+            headers,
+            body: method === "GET" ? undefined : JSON.stringify(body),
+          });
+
+          const timeMs = performance.now() - start;
+
+          let text;
+          let json;
+          const raw = await res.text();
+
+          try {
+            json = JSON.parse(raw);
+          } catch {
+            // 不是 JSON，当作纯文本
+            text = raw;
+          }
+
+          if (!res.ok) {
+            setStatus(
+              "error",
+              "HTTP " + res.status + " 调用失败，请检查接口和参数"
+            );
+          } else {
+            setStatus("success", "调用成功");
+          }
+
+          let llmText = null;
+          if (json != null) {
+            llmText = extractLLMText(json);
+          }
+          if (!llmText && text) {
+            llmText = text;
+          }
+          if (!llmText) {
+            llmText = "(模型没有返回内容)";
+          }
+
+          const assistantMessage = { role: "assistant", content: llmText };
+          messages.push(assistantMessage);
+          appendMessage("assistant", llmText);
+
+          responseMeta.textContent =
+            "HTTP " +
+            res.status +
+            " · " +
+            method +
+            " · " +
+            timeMs.toFixed(0) +
+            " ms";
+        } catch (err) {
+          console.error(err);
+          setStatus(
+            "error",
+            "请求异常：" + (err && err.message ? err.message : String(err))
+          );
+          responseMeta.textContent = "请求失败";
+          responseBox.textContent =
+            "请求没有成功发出或被浏览器拦截。\n\n常见原因：\n- CORS 跨域限制（API 没有允许浏览器访问）\n- HTTPS / 证书问题\n- 接口地址写错\n\n详细错误已输出到浏览器控制台。";
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      sendBtn.addEventListener("click", () => {
+        callLLM();
+      });
+
+      promptInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          callLLM();
+        }
+      });
+    </script>
+  </body>
+</html>
+
