@@ -2,7 +2,7 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <title>LLM Agent 简易调用页面</title>
+    <title>职途明镜 · 职业对话助手</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       * {
@@ -68,23 +68,14 @@
       }
 
       h1 {
-        font-size: 18px;
+        font-size: 20px;
         margin: 0;
-        letter-spacing: 0.02em;
+        letter-spacing: 0.04em;
       }
 
       .subtitle {
         font-size: 12px;
         color: #9ca3af;
-      }
-
-      .badge {
-        font-size: 11px;
-        padding: 3px 9px;
-        border-radius: 999px;
-        background: rgba(15, 118, 110, 0.18);
-        color: #a5f3fc;
-        border: 1px solid rgba(34, 211, 238, 0.45);
       }
 
       .section-label {
@@ -97,11 +88,12 @@
 
       .grid {
         display: grid;
-        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-        gap: 16px;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+        gap: 18px;
+        align-items: stretch;
       }
 
-      @media (max-width: 800px) {
+      @media (max-width: 900px) {
         .grid {
           grid-template-columns: minmax(0, 1fr);
         }
@@ -115,7 +107,7 @@
       }
 
       .card + .card {
-        border-color: rgba(31, 41, 55, 0.95);
+        border-color: rgba(31, 41, 55, 0.9);
         background: radial-gradient(circle at top left, #020617, #020617);
       }
 
@@ -345,18 +337,17 @@
         <div class="title-group">
           <div class="logo">LL</div>
           <div>
-            <h1>LLM Agent API 调用面板</h1>
-            <div class="subtitle">在浏览器里快速试你的 LLM 接口</div>
+            <h1>职途明镜 · 职业对话助手</h1>
+            <div class="subtitle">为你的职业规划、求职面试与职场问题提供 AI 视角的参考</div>
           </div>
         </div>
-        <div class="badge">纯前端 · 无后端 · 自行配置 API</div>
       </header>
 
       <section>
-        <div class="section-label">请求设置 & 会话</div>
+        <div class="section-label">基础设置 & 对话</div>
         <div class="grid">
           <!-- 左侧：一次性配置区域 -->
-          <div class="card">
+          <div class="card" style="align-self: flex-start;">
             <div class="field">
               <label for="endpoint">
                 接口地址（URL）
@@ -421,13 +412,19 @@
           </div>
 
           <!-- 右侧：聊天对话区域 -->
-          <div class="card" style="display: flex; flex-direction: column; gap: 8px;">
+          <div
+            class="card"
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+              background: radial-gradient(circle at top, #020617, #020617);
+            "
+          >
             <div class="response-header">
-              <div class="section-label" style="margin-bottom: 0">
-                对话窗口
-              </div>
+              <div class="section-label" style="margin-bottom: 0">对话窗口</div>
               <div class="response-meta mono" id="responseMeta">
-                新会话
+                新会话 · OpenAI Chat Completions
               </div>
             </div>
             <div
@@ -454,7 +451,8 @@
                   padding: 8px 0;
                 "
               >
-                这是一个支持上下文的 ChatGPT 对话窗口。左侧配置好 API 和模型后，在下方输入框开始聊天。
+                欢迎来到「职途明镜」：在这里和你的职业顾问 AI 进行多轮对话。左侧配置好 OpenAI
+                接口和 API Key 后，从下方输入框开始交流。
               </div>
             </div>
             <div
