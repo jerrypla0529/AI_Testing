@@ -24,13 +24,233 @@
 
       .app {
         width: 100%;
-        max-width: 960px;
+        max-width: 1200px;
         background: rgba(15, 23, 42, 0.96);
         border-radius: 18px;
         border: 1px solid rgba(148, 163, 184, 0.35);
         box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
         padding: 24px 24px 20px;
         backdrop-filter: blur(18px);
+      }
+
+      /* 登录/注册弹窗样式 */
+      .auth-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(2, 6, 23, 0.95);
+        backdrop-filter: blur(12px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1001;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .auth-modal.hidden {
+        display: none;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .auth-content {
+        background: radial-gradient(circle at top left, #0f172a, #020617);
+        border-radius: 24px;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        padding: 40px;
+        max-width: 440px;
+        width: 90%;
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
+        animation: slideUp 0.4s ease;
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .auth-header {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      .auth-logo {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+        background: conic-gradient(
+          from 160deg,
+          #4ade80,
+          #22d3ee,
+          #6366f1,
+          #a855f7,
+          #4ade80
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #020617;
+        font-weight: 800;
+        font-size: 28px;
+        margin: 0 auto 20px;
+      }
+
+      .auth-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0 0 8px;
+        background: linear-gradient(135deg, #4ade80, #22d3ee);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .auth-subtitle {
+        font-size: 14px;
+        color: #9ca3af;
+      }
+
+      .auth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .auth-field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .auth-label {
+        font-size: 13px;
+        color: #e5e7eb;
+        font-weight: 500;
+      }
+
+      .auth-input {
+        width: 100%;
+        border-radius: 10px;
+        border: 1px solid rgba(55, 65, 81, 0.9);
+        background: rgba(15, 23, 42, 0.9);
+        color: #e5e7eb;
+        padding: 10px 12px;
+        font-size: 14px;
+        outline: none;
+        transition: all 0.2s ease;
+      }
+
+      .auth-input:focus {
+        border-color: #22d3ee;
+        box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.2);
+        background: rgba(15, 23, 42, 0.96);
+      }
+
+      .auth-input::placeholder {
+        color: #6b7280;
+      }
+
+      .auth-error {
+        font-size: 12px;
+        color: #fecaca;
+        background: rgba(127, 29, 29, 0.2);
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(248, 113, 113, 0.3);
+        display: none;
+      }
+
+      .auth-error.show {
+        display: block;
+      }
+
+      .auth-tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid rgba(55, 65, 81, 0.5);
+      }
+
+      .auth-tab {
+        flex: 1;
+        padding: 12px;
+        background: transparent;
+        border: none;
+        color: #9ca3af;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        transition: all 0.2s ease;
+      }
+
+      .auth-tab.active {
+        color: #22d3ee;
+        border-bottom-color: #22d3ee;
+      }
+
+      .auth-tab:hover {
+        color: #e5e7eb;
+      }
+
+      .auth-btn {
+        width: 100%;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 24px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        background: radial-gradient(circle at top left, #22c55e, #16a34a);
+        color: #022c22;
+        box-shadow: 0 10px 24px rgba(22, 163, 74, 0.52);
+        transition: all 0.2s ease;
+        margin-top: 8px;
+      }
+
+      .auth-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 30px rgba(22, 163, 74, 0.58);
+        filter: brightness(1.05);
+      }
+
+      .auth-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .auth-switch {
+        text-align: center;
+        margin-top: 16px;
+        font-size: 13px;
+        color: #9ca3af;
+      }
+
+      .auth-switch-link {
+        color: #22d3ee;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .auth-switch-link:hover {
+        text-decoration: underline;
       }
 
       /* 欢迎弹窗样式 */
@@ -53,15 +273,6 @@
         display: none;
       }
 
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-
       .welcome-content {
         background: radial-gradient(circle at top left, #0f172a, #020617);
         border-radius: 24px;
@@ -72,17 +283,6 @@
         text-align: center;
         box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
         animation: slideUp 0.4s ease;
-      }
-
-      @keyframes slideUp {
-        from {
-          transform: translateY(20px);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
       }
 
       .welcome-logo {
@@ -321,6 +521,30 @@
         color: #9ca3af;
       }
 
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        color: #9ca3af;
+      }
+
+      .logout-btn {
+        background: transparent;
+        border: 1px dashed rgba(75, 85, 99, 0.95);
+        color: #9ca3af;
+        padding: 4px 10px;
+        font-size: 11px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .logout-btn:hover {
+        border-color: #fecaca;
+        color: #fecaca;
+      }
+
       .section-label {
         font-size: 11px;
         text-transform: uppercase;
@@ -331,7 +555,7 @@
 
       .grid {
         display: grid;
-        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+        grid-template-columns: minmax(0, 0.5fr) minmax(0, 2fr);
         gap: 18px;
         align-items: stretch;
       }
@@ -351,7 +575,7 @@
 
       .card + .card {
         border-color: rgba(31, 41, 55, 0.9);
-        background: radial-gradient(circle at top left, #020617, #020617);
+        background: radial-gradient(circle at top, #020617, #020617);
       }
 
       label {
@@ -397,8 +621,8 @@
 
       textarea {
         resize: vertical;
-        min-height: 120px;
-        max-height: 260px;
+        min-height: 100px;
+        max-height: 200px;
         line-height: 1.5;
       }
 
@@ -615,8 +839,102 @@
     </style>
   </head>
   <body>
+    <!-- 登录/注册弹窗 -->
+    <div class="auth-modal" id="authModal">
+      <div class="auth-content">
+        <div class="auth-header">
+          <div class="auth-logo">LL</div>
+          <h2 class="auth-title" id="authTitle">登录</h2>
+          <p class="auth-subtitle" id="authSubtitle">请输入您的账号信息</p>
+        </div>
+
+        <div id="authError" class="auth-error"></div>
+
+        <!-- 登录表单 -->
+        <form class="auth-form" id="loginForm">
+          <div class="auth-field">
+            <label class="auth-label" for="loginUsername">用户名</label>
+            <input
+              type="text"
+              id="loginUsername"
+              class="auth-input"
+              placeholder="请输入用户名"
+              required
+            />
+          </div>
+          <div class="auth-field">
+            <label class="auth-label" for="loginPassword">密码</label>
+            <input
+              type="password"
+              id="loginPassword"
+              class="auth-input"
+              placeholder="请输入密码"
+              required
+            />
+          </div>
+          <button type="submit" class="auth-btn" id="loginBtn">登录</button>
+          <div class="auth-switch">
+            还没有账号？
+            <a href="#" class="auth-switch-link" id="switchToRegister">立即注册</a>
+          </div>
+        </form>
+
+        <!-- 注册表单 -->
+        <form class="auth-form hidden" id="registerForm">
+          <div class="auth-field">
+            <label class="auth-label" for="registerUsername">用户名</label>
+            <input
+              type="text"
+              id="registerUsername"
+              class="auth-input"
+              placeholder="请输入用户名（3-20个字符）"
+              required
+              minlength="3"
+              maxlength="20"
+            />
+          </div>
+          <div class="auth-field">
+            <label class="auth-label" for="registerPassword">密码</label>
+            <input
+              type="password"
+              id="registerPassword"
+              class="auth-input"
+              placeholder="请输入密码（至少6个字符）"
+              required
+              minlength="6"
+            />
+          </div>
+          <div class="auth-field">
+            <label class="auth-label" for="registerConfirmPassword">确认密码</label>
+            <input
+              type="password"
+              id="registerConfirmPassword"
+              class="auth-input"
+              placeholder="请再次输入密码"
+              required
+            />
+          </div>
+          <div class="auth-field">
+            <label class="auth-label" for="registerInviteCode">邀请码</label>
+            <input
+              type="text"
+              id="registerInviteCode"
+              class="auth-input"
+              placeholder="请输入邀请码"
+              required
+            />
+          </div>
+          <button type="submit" class="auth-btn" id="registerBtn">注册</button>
+          <div class="auth-switch">
+            已有账号？
+            <a href="#" class="auth-switch-link" id="switchToLogin">立即登录</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <!-- 欢迎弹窗 -->
-    <div class="welcome-modal" id="welcomeModal">
+    <div class="welcome-modal hidden" id="welcomeModal">
       <div class="welcome-content">
         <div class="welcome-logo">LL</div>
         <h2 class="welcome-title">欢迎使用「职途明镜」</h2>
@@ -700,6 +1018,10 @@
             <div class="subtitle">为你的职业规划、求职面试与职场问题提供 AI 视角的参考</div>
           </div>
         </div>
+        <div class="user-info">
+          <span id="currentUsername">用户</span>
+          <button class="logout-btn" id="logoutBtn">退出登录</button>
+        </div>
       </header>
 
       <section>
@@ -771,8 +1093,8 @@
               id="chatHistory"
               style="
                 flex: 1;
-                min-height: 260px;
-                max-height: 460px;
+                min-height: 400px;
+                max-height: 600px;
                 overflow-y: auto;
                 border-radius: 10px;
                 border: 1px solid rgba(55, 65, 81, 0.95);
@@ -847,6 +1169,34 @@
     </main>
 
     <script>
+      // 常量定义
+      const INVITE_CODE = "JLS2026";
+      const STORAGE_KEY_USERS = "llm_demo_users";
+      const STORAGE_KEY_CURRENT_USER = "llm_demo_current_user";
+      const STORAGE_KEY_API = "llm_demo_openai_api_key";
+      const STORAGE_KEY_WELCOME_SHOWN = "llm_demo_welcome_shown";
+
+      // DOM 元素
+      const authModal = document.getElementById("authModal");
+      const authTitle = document.getElementById("authTitle");
+      const authSubtitle = document.getElementById("authSubtitle");
+      const loginForm = document.getElementById("loginForm");
+      const registerForm = document.getElementById("registerForm");
+      const authError = document.getElementById("authError");
+      const loginBtn = document.getElementById("loginBtn");
+      const registerBtn = document.getElementById("registerBtn");
+      const switchToRegister = document.getElementById("switchToRegister");
+      const switchToLogin = document.getElementById("switchToLogin");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const currentUsername = document.getElementById("currentUsername");
+
+      const welcomeModal = document.getElementById("welcomeModal");
+      const tutorialOverlay = document.getElementById("tutorialOverlay");
+      const newUserBtn = document.getElementById("newUserBtn");
+      const returnUserBtn = document.getElementById("returnUserBtn");
+      const tutorialCloseBtn = document.getElementById("tutorialCloseBtn");
+      const mainApp = document.getElementById("mainApp");
+
       const endpointInput = document.getElementById("endpoint");
       const methodSelect = document.getElementById("method");
       const apiKeyInput = document.getElementById("apiKey");
@@ -860,23 +1210,202 @@
       const fileInfoInChat = document.getElementById("fileInfoInChat");
       const fileBtnInChat = document.getElementById("fileBtnInChat");
       const chatHistoryEl = document.getElementById("chatHistory");
-      const welcomeModal = document.getElementById("welcomeModal");
-      const tutorialOverlay = document.getElementById("tutorialOverlay");
-      const newUserBtn = document.getElementById("newUserBtn");
-      const returnUserBtn = document.getElementById("returnUserBtn");
-      const tutorialCloseBtn = document.getElementById("tutorialCloseBtn");
-      const mainApp = document.getElementById("mainApp");
-
-      const STORAGE_KEY_API = "llm_demo_openai_api_key";
-      const STORAGE_KEY_WELCOME_SHOWN = "llm_demo_welcome_shown";
 
       let messages = [];
 
-      // 检查是否已经显示过欢迎界面
-      const welcomeShown = localStorage.getItem(STORAGE_KEY_WELCOME_SHOWN);
-      if (welcomeShown === "true") {
-        welcomeModal.classList.add("hidden");
-        mainApp.classList.remove("hidden");
+      // 用户管理函数
+      function getUsers() {
+        try {
+          const usersStr = localStorage.getItem(STORAGE_KEY_USERS);
+          return usersStr ? JSON.parse(usersStr) : {};
+        } catch (e) {
+          return {};
+        }
+      }
+
+      function saveUsers(users) {
+        try {
+          localStorage.setItem(STORAGE_KEY_USERS, JSON.stringify(users));
+        } catch (e) {
+          console.error("保存用户数据失败：", e);
+        }
+      }
+
+      function getCurrentUser() {
+        try {
+          return localStorage.getItem(STORAGE_KEY_CURRENT_USER);
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function setCurrentUser(username) {
+        try {
+          if (username) {
+            localStorage.setItem(STORAGE_KEY_CURRENT_USER, username);
+          } else {
+            localStorage.removeItem(STORAGE_KEY_CURRENT_USER);
+          }
+        } catch (e) {
+          console.error("保存当前用户失败：", e);
+        }
+      }
+
+      function showAuthError(message) {
+        authError.textContent = message;
+        authError.classList.add("show");
+        setTimeout(() => {
+          authError.classList.remove("show");
+        }, 5000);
+      }
+
+      // 切换到注册界面
+      switchToRegister.addEventListener("click", (e) => {
+        e.preventDefault();
+        loginForm.classList.add("hidden");
+        registerForm.classList.remove("hidden");
+        authTitle.textContent = "注册";
+        authSubtitle.textContent = "创建新账号，开始使用职途明镜";
+        authError.classList.remove("show");
+        // 清空登录表单
+        document.getElementById("loginUsername").value = "";
+        document.getElementById("loginPassword").value = "";
+      });
+
+      // 切换到登录界面
+      switchToLogin.addEventListener("click", (e) => {
+        e.preventDefault();
+        registerForm.classList.add("hidden");
+        loginForm.classList.remove("hidden");
+        authTitle.textContent = "登录";
+        authSubtitle.textContent = "请输入您的账号信息";
+        authError.classList.remove("show");
+        // 清空注册表单
+        document.getElementById("registerUsername").value = "";
+        document.getElementById("registerPassword").value = "";
+        document.getElementById("registerConfirmPassword").value = "";
+        document.getElementById("registerInviteCode").value = "";
+      });
+
+      // 注册处理
+      registerForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const username = document.getElementById("registerUsername").value.trim();
+        const password = document.getElementById("registerPassword").value;
+        const confirmPassword = document.getElementById("registerConfirmPassword").value;
+        const inviteCode = document.getElementById("registerInviteCode").value.trim();
+
+        // 验证邀请码
+        if (inviteCode !== INVITE_CODE) {
+          showAuthError("邀请码错误，请输入正确的邀请码");
+          return;
+        }
+
+        // 验证用户名
+        if (username.length < 3 || username.length > 20) {
+          showAuthError("用户名长度必须在3-20个字符之间");
+          return;
+        }
+
+        // 验证密码
+        if (password.length < 6) {
+          showAuthError("密码长度至少为6个字符");
+          return;
+        }
+
+        // 验证确认密码
+        if (password !== confirmPassword) {
+          showAuthError("两次输入的密码不一致");
+          return;
+        }
+
+        // 检查用户名是否已存在
+        const users = getUsers();
+        if (users[username]) {
+          showAuthError("该用户名已被注册，请使用其他用户名");
+          return;
+        }
+
+        // 保存用户（简单存储，实际应用中应该加密密码）
+        users[username] = {
+          username,
+          password, // 实际应用中应该使用哈希加密
+          createdAt: new Date().toISOString()
+        };
+        saveUsers(users);
+
+        // 设置当前用户并进入欢迎界面
+        setCurrentUser(username);
+        authModal.classList.add("hidden");
+        welcomeModal.classList.remove("hidden");
+      });
+
+      // 登录处理
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const username = document.getElementById("loginUsername").value.trim();
+        const password = document.getElementById("loginPassword").value;
+
+        // 验证用户
+        const users = getUsers();
+        const user = users[username];
+
+        if (!user) {
+          showAuthError("用户名或密码错误");
+          return;
+        }
+
+        if (user.password !== password) {
+          showAuthError("用户名或密码错误");
+          return;
+        }
+
+        // 设置当前用户并进入欢迎界面
+        setCurrentUser(username);
+        authModal.classList.add("hidden");
+        welcomeModal.classList.remove("hidden");
+      });
+
+      // 退出登录
+      logoutBtn.addEventListener("click", () => {
+        if (confirm("确定要退出登录吗？")) {
+          setCurrentUser(null);
+          localStorage.removeItem(STORAGE_KEY_WELCOME_SHOWN);
+          authModal.classList.remove("hidden");
+          welcomeModal.classList.add("hidden");
+          mainApp.classList.add("hidden");
+          tutorialOverlay.classList.add("hidden");
+          // 重置为登录界面
+          registerForm.classList.add("hidden");
+          loginForm.classList.remove("hidden");
+          authTitle.textContent = "登录";
+          authSubtitle.textContent = "请输入您的账号信息";
+          // 清空表单
+          loginForm.reset();
+          registerForm.reset();
+        }
+      });
+
+      // 检查登录状态
+      const currentUser = getCurrentUser();
+      if (currentUser) {
+        currentUsername.textContent = currentUser;
+        authModal.classList.add("hidden");
+        // 检查是否已经显示过欢迎界面
+        const welcomeShown = localStorage.getItem(STORAGE_KEY_WELCOME_SHOWN);
+        if (welcomeShown === "true") {
+          welcomeModal.classList.add("hidden");
+          mainApp.classList.remove("hidden");
+        } else {
+          welcomeModal.classList.remove("hidden");
+        }
+      } else {
+        authModal.classList.remove("hidden");
+        // 默认显示登录界面
+        registerForm.classList.add("hidden");
+        loginForm.classList.remove("hidden");
+        authTitle.textContent = "登录";
+        authSubtitle.textContent = "请输入您的账号信息";
       }
 
       // 新手按钮 - 显示教程
@@ -1217,4 +1746,3 @@
     </script>
   </body>
 </html>
-
