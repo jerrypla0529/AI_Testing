@@ -33,6 +33,249 @@
         backdrop-filter: blur(18px);
       }
 
+      /* 欢迎弹窗样式 */
+      .welcome-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(2, 6, 23, 0.95);
+        backdrop-filter: blur(12px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .welcome-modal.hidden {
+        display: none;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .welcome-content {
+        background: radial-gradient(circle at top left, #0f172a, #020617);
+        border-radius: 24px;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        padding: 48px 40px;
+        max-width: 520px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
+        animation: slideUp 0.4s ease;
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .welcome-logo {
+        width: 64px;
+        height: 64px;
+        border-radius: 18px;
+        background: conic-gradient(
+          from 160deg,
+          #4ade80,
+          #22d3ee,
+          #6366f1,
+          #a855f7,
+          #4ade80
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #020617;
+        font-weight: 800;
+        font-size: 32px;
+        margin: 0 auto 24px;
+      }
+
+      .welcome-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin: 0 0 12px;
+        background: linear-gradient(135deg, #4ade80, #22d3ee);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .welcome-subtitle {
+        font-size: 15px;
+        color: #9ca3af;
+        margin-bottom: 36px;
+        line-height: 1.6;
+      }
+
+      .welcome-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .welcome-btn {
+        border: none;
+        border-radius: 14px;
+        padding: 14px 24px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(55, 65, 81, 0.9);
+        color: #e5e7eb;
+      }
+
+      .welcome-btn:hover {
+        background: rgba(30, 64, 175, 0.3);
+        border-color: #22d3ee;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(34, 211, 238, 0.2);
+      }
+
+      .welcome-btn.primary {
+        background: radial-gradient(circle at top left, #22c55e, #16a34a);
+        color: #022c22;
+        border: none;
+        box-shadow: 0 10px 24px rgba(22, 163, 74, 0.52);
+      }
+
+      .welcome-btn.primary:hover {
+        box-shadow: 0 18px 30px rgba(22, 163, 74, 0.58);
+        filter: brightness(1.05);
+      }
+
+      /* 教程界面样式 */
+      .tutorial-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(2, 6, 23, 0.95);
+        backdrop-filter: blur(12px);
+        z-index: 999;
+        overflow-y: auto;
+        padding: 24px;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .tutorial-overlay.hidden {
+        display: none;
+      }
+
+      .tutorial-content {
+        max-width: 800px;
+        margin: 0 auto;
+        background: radial-gradient(circle at top left, #0f172a, #020617);
+        border-radius: 24px;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        padding: 40px;
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
+      }
+
+      .tutorial-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .tutorial-title {
+        font-size: 32px;
+        font-weight: 700;
+        margin: 0 0 12px;
+        background: linear-gradient(135deg, #4ade80, #22d3ee);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .tutorial-section {
+        margin-bottom: 32px;
+        padding: 24px;
+        background: rgba(15, 23, 42, 0.5);
+        border-radius: 16px;
+        border: 1px solid rgba(55, 65, 81, 0.5);
+      }
+
+      .tutorial-section-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin: 0 0 16px;
+        color: #22d3ee;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .tutorial-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #4ade80, #22c55e);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #022c22;
+        font-weight: 700;
+        font-size: 18px;
+      }
+
+      .tutorial-text {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #d1d5db;
+        margin-bottom: 12px;
+      }
+
+      .tutorial-highlight {
+        background: rgba(34, 211, 238, 0.15);
+        padding: 2px 8px;
+        border-radius: 4px;
+        color: #22d3ee;
+        font-weight: 500;
+      }
+
+      .tutorial-close-btn {
+        display: block;
+        margin: 32px auto 0;
+        border: none;
+        border-radius: 14px;
+        padding: 14px 32px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        background: radial-gradient(circle at top left, #22c55e, #16a34a);
+        color: #022c22;
+        box-shadow: 0 10px 24px rgba(22, 163, 74, 0.52);
+        transition: all 0.2s ease;
+      }
+
+      .tutorial-close-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 30px rgba(22, 163, 74, 0.58);
+        filter: brightness(1.05);
+      }
+
+      .app.hidden {
+        display: none;
+      }
+
       .app-header {
         display: flex;
         align-items: center;
@@ -329,10 +572,126 @@
         font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
           "Liberation Mono", "Courier New", monospace;
       }
+
+      /* 聊天输入框内的文件按钮样式 */
+      .chat-input-container {
+        border-radius: 999px;
+        border: 1px solid rgba(55, 65, 81, 0.95);
+        padding: 4px 6px 4px 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(15, 23, 42, 0.9);
+      }
+
+      .file-btn-in-chat {
+        background: transparent;
+        color: #9ca3af;
+        box-shadow: none;
+        border-radius: 999px;
+        border: 1px dashed rgba(75, 85, 99, 0.95);
+        padding: 6px 12px;
+        font-size: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+      }
+
+      .file-btn-in-chat:hover {
+        background: rgba(15, 23, 42, 0.75);
+        border-color: #22d3ee;
+        color: #22d3ee;
+      }
+
+      .file-info-in-chat {
+        font-size: 11px;
+        color: #9ca3af;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 120px;
+      }
     </style>
   </head>
   <body>
-    <main class="app">
+    <!-- 欢迎弹窗 -->
+    <div class="welcome-modal" id="welcomeModal">
+      <div class="welcome-content">
+        <div class="welcome-logo">LL</div>
+        <h2 class="welcome-title">欢迎使用「职途明镜」</h2>
+        <p class="welcome-subtitle">
+          为你的职业规划、求职面试与职场问题<br />提供 AI 视角的参考
+        </p>
+        <div class="welcome-buttons">
+          <button class="welcome-btn primary" id="newUserBtn">
+            我是新手
+          </button>
+          <button class="welcome-btn" id="returnUserBtn">
+            我曾用过「职途明镜」
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 教程界面 -->
+    <div class="tutorial-overlay hidden" id="tutorialOverlay">
+      <div class="tutorial-content">
+        <div class="tutorial-header">
+          <h2 class="tutorial-title">使用指南</h2>
+          <p style="color: #9ca3af; font-size: 15px;">
+            快速了解如何使用「职途明镜」
+          </p>
+        </div>
+
+        <div class="tutorial-section">
+          <div class="tutorial-section-title">
+            <div class="tutorial-icon">1</div>
+            <span>配置 API 接口</span>
+          </div>
+          <p class="tutorial-text">
+            在左侧配置区域，首先输入你的 <span class="tutorial-highlight">接口地址（URL）</span>，例如 OpenAI 的接口地址。然后选择请求方式（通常是 POST），最后输入你的 <span class="tutorial-highlight">API Key</span>。API Key 会保存在浏览器本地，只有你能看到。
+          </p>
+        </div>
+
+        <div class="tutorial-section">
+          <div class="tutorial-section-title">
+            <div class="tutorial-icon">2</div>
+            <span>开始对话</span>
+          </div>
+          <p class="tutorial-text">
+            配置完成后，在右侧聊天窗口下方的 <span class="tutorial-highlight">输入框</span> 中输入你的问题或需求。你可以直接输入文字，然后点击 <span class="tutorial-highlight">发送</span> 按钮或按 <span class="tutorial-highlight">Enter</span> 键发送消息。按 <span class="tutorial-highlight">Shift + Enter</span> 可以换行。
+          </p>
+        </div>
+
+        <div class="tutorial-section">
+          <div class="tutorial-section-title">
+            <div class="tutorial-icon">3</div>
+            <span>上传文件</span>
+          </div>
+          <p class="tutorial-text">
+            如果需要上传文件（如简历、文档等），可以在聊天输入框内找到 <span class="tutorial-highlight">📎 选择文件</span> 按钮。点击该按钮选择文件后，文件内容会作为上下文附加到你的消息中一起发送给 AI。支持同时选择多个文件。
+          </p>
+        </div>
+
+        <div class="tutorial-section">
+          <div class="tutorial-section-title">
+            <div class="tutorial-icon">4</div>
+            <span>查看回复</span>
+          </div>
+          <p class="tutorial-text">
+            AI 的回复会显示在聊天窗口中，你可以继续提问进行多轮对话。对话会保持上下文，AI 能够理解之前的对话内容。如果需要开始新的对话，可以清空聊天记录。
+          </p>
+        </div>
+
+        <button class="tutorial-close-btn" id="tutorialCloseBtn">
+          开始使用
+        </button>
+      </div>
+    </div>
+
+    <!-- 主应用界面 -->
+    <main class="app hidden" id="mainApp">
       <header class="app-header">
         <div class="title-group">
           <div class="logo">LL</div>
@@ -387,25 +746,6 @@
                 <div class="pill mono" id="methodPreview">
                   fetch(url, { method: "POST" })
                 </div>
-                <div class="pill" style="display: flex; align-items: center; gap: 6px;">
-                  <button
-                    type="button"
-                    id="fileBtn"
-                    class="secondary"
-                    style="padding: 4px 9px; font-size: 11px;"
-                  >
-                    选择文件
-                  </button>
-                  <input
-                    id="fileInput"
-                    type="file"
-                    multiple
-                    style="display: none;"
-                  />
-                  <span id="fileInfo" style="font-size: 11px; color: #9ca3af;">
-                    未选择文件
-                  </span>
-                </div>
               </div>
             </div>
             <div class="status status--idle" id="statusText"></div>
@@ -455,17 +795,24 @@
                 接口和 API Key 后，从下方输入框开始交流。
               </div>
             </div>
-            <div
-              style="
-                border-radius: 999px;
-                border: 1px solid rgba(55, 65, 81, 0.95);
-                padding: 4px 6px 4px 10px;
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                background: rgba(15, 23, 42, 0.9);
-              "
-            >
+            <div class="chat-input-container">
+              <button
+                type="button"
+                id="fileBtnInChat"
+                class="file-btn-in-chat"
+                title="选择文件"
+              >
+                📎 选择文件
+              </button>
+              <input
+                id="fileInput"
+                type="file"
+                multiple
+                style="display: none;"
+              />
+              <span id="fileInfoInChat" class="file-info-in-chat">
+                未选择文件
+              </span>
               <input
                 id="prompt"
                 type="text"
@@ -510,13 +857,47 @@
       const responseMeta = document.getElementById("responseMeta");
       const methodPreview = document.getElementById("methodPreview");
       const fileInput = document.getElementById("fileInput");
-      const fileInfo = document.getElementById("fileInfo");
-      const fileBtn = document.getElementById("fileBtn");
+      const fileInfoInChat = document.getElementById("fileInfoInChat");
+      const fileBtnInChat = document.getElementById("fileBtnInChat");
       const chatHistoryEl = document.getElementById("chatHistory");
+      const welcomeModal = document.getElementById("welcomeModal");
+      const tutorialOverlay = document.getElementById("tutorialOverlay");
+      const newUserBtn = document.getElementById("newUserBtn");
+      const returnUserBtn = document.getElementById("returnUserBtn");
+      const tutorialCloseBtn = document.getElementById("tutorialCloseBtn");
+      const mainApp = document.getElementById("mainApp");
 
       const STORAGE_KEY_API = "llm_demo_openai_api_key";
+      const STORAGE_KEY_WELCOME_SHOWN = "llm_demo_welcome_shown";
 
       let messages = [];
+
+      // 检查是否已经显示过欢迎界面
+      const welcomeShown = localStorage.getItem(STORAGE_KEY_WELCOME_SHOWN);
+      if (welcomeShown === "true") {
+        welcomeModal.classList.add("hidden");
+        mainApp.classList.remove("hidden");
+      }
+
+      // 新手按钮 - 显示教程
+      newUserBtn.addEventListener("click", () => {
+        welcomeModal.classList.add("hidden");
+        tutorialOverlay.classList.remove("hidden");
+      });
+
+      // 老用户按钮 - 直接进入主界面
+      returnUserBtn.addEventListener("click", () => {
+        welcomeModal.classList.add("hidden");
+        mainApp.classList.remove("hidden");
+        localStorage.setItem(STORAGE_KEY_WELCOME_SHOWN, "true");
+      });
+
+      // 关闭教程，进入主界面
+      tutorialCloseBtn.addEventListener("click", () => {
+        tutorialOverlay.classList.add("hidden");
+        mainApp.classList.remove("hidden");
+        localStorage.setItem(STORAGE_KEY_WELCOME_SHOWN, "true");
+      });
 
       function setStatus(type, text) {
         statusText.className = "status status--" + type;
@@ -611,21 +992,21 @@
         }
       });
 
-      fileBtn.addEventListener("click", () => {
+      // 聊天框内的文件按钮
+      fileBtnInChat.addEventListener("click", () => {
         fileInput.click();
       });
 
       fileInput.addEventListener("change", () => {
         const files = Array.from(fileInput.files || []);
         if (!files.length) {
-          fileInfo.textContent = "未选择文件";
+          fileInfoInChat.textContent = "未选择文件";
           return;
         }
         if (files.length === 1) {
-          fileInfo.textContent = "已选 1 个文件：" + files[0].name;
+          fileInfoInChat.textContent = files[0].name;
         } else {
-          fileInfo.textContent =
-            "已选 " + files.length + " 个文件，首个：" + files[0].name;
+          fileInfoInChat.textContent = files.length + " 个文件";
         }
       });
 
@@ -818,8 +1199,6 @@
             "请求异常：" + (err && err.message ? err.message : String(err))
           );
           responseMeta.textContent = "请求失败";
-          responseBox.textContent =
-            "请求没有成功发出或被浏览器拦截。\n\n常见原因：\n- CORS 跨域限制（API 没有允许浏览器访问）\n- HTTPS / 证书问题\n- 接口地址写错\n\n详细错误已输出到浏览器控制台。";
         } finally {
           setLoading(false);
         }
@@ -836,6 +1215,8 @@
         }
       });
     </script>
+  </body>
+</html>
   </body>
 </html>
 
